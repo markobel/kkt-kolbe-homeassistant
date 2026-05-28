@@ -1,0 +1,22 @@
+# Example Home Assistant Lovelace cards for the KKT KOLBE hood.
+# Adjust entity IDs if you changed HA_DEVICE_ID / HA_DEVICE_NAME in .env.
+
+# Simple entities card
+type: entities
+title: Kitchen Hood
+entities:
+  - entity: switch.cappa_kkt_kolbe_power
+    name: Power
+  - entity: switch.cappa_kkt_kolbe_light
+    name: Light
+  - entity: select.cappa_kkt_kolbe_speed
+    name: Speed
+  - type: divider
+  - entity: binary_sensor.cappa_kkt_kolbe_connected
+    name: Connected
+
+# --- Alternative: fan tile with speed slider ---
+# type: tile
+# entity: fan.cappa_kkt_kolbe_fan
+# features:
+#   - type: fan-speed

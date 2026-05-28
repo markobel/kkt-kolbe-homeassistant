@@ -1,0 +1,15 @@
+services:
+  hekr-bridge:
+    container_name: hekr-bridge
+    build: .
+    image: hekr-bridge:local
+    pull_policy: never
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./hekr_bridge.py:/app/hekr_bridge.py
+      - ./data:/data
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true

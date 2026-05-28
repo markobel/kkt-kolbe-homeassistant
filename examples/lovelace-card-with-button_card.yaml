@@ -1,0 +1,188 @@
+# Example Home Assistant Lovelace cards for the KKT KOLBE hood.
+# Adjust entity IDs & Translation if you changed HA_DEVICE_ID / HA_DEVICE_NAME in .env.
+
+type: custom:button-card
+entity: fan.cappa_kkt_kolbe_ventola
+icon: mdi:fan
+show_state: false
+show_label: true
+name: Cappa Cucina
+label: |
+  [[[ 
+    if (states['fan.cappa_kkt_kolbe_ventola'].state === 'on') {
+      const vel = states['select.cappa_kkt_kolbe_velocita'].state;
+      if (vel === '4') return '🌪️ Cappa in Moto • TURBO';
+      return `🌪️ Cappa in Moto • Vel ${vel}`;
+    }
+    return '🌑 Spenta'; 
+  ]]]
+styles:
+  grid:
+    - grid-template-areas: "\"i n\" \"i l\""
+    - grid-template-columns: 40px 1fr
+  card:
+    - border-radius: 16px
+    - height: 55px
+    - padding: 10px 12px
+  icon:
+    - width: 24px
+    - color: |
+        [[[ 
+          return states['fan.cappa_kkt_kolbe_ventola'].state === 'on' 
+            ? 'orange' : 'lightgreen'; 
+        ]]]
+    - animation: |
+        [[[ 
+          return states['fan.cappa_kkt_kolbe_ventola'].state === 'on' 
+            ? 'rotating 2s linear infinite' : 'none'; 
+        ]]]
+  name:
+    - justify-self: start
+    - font-weight: 800
+    - font-size: 13px
+  label:
+    - justify-self: start
+    - font-size: 11px
+    - font-weight: 700
+tap_action:
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      title: Cappa Cucina
+      content:
+        type: vertical-stack
+        cards:
+          - type: entities
+            title: Comando Ventola
+            show_header_toggle: false
+            entities:
+              - entity: select.cappa_kkt_kolbe_velocita
+                name: Velocità Cappa
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: Vel 1
+                icon: mdi:numeric-1-box-outline
+                icon_color: >-
+                  {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0)
+                  %}
+
+                  {{ 'black' if v >= 1 else 'grey' }}
+                badge_color: ""
+                badge_icon: ""
+                fill_container: true
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  service_data:
+                    entity_id: select.cappa_kkt_kolbe_velocita
+                    option: "1"
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'orange' if v >= 1 else 'var(--card-background-color)' }} !important;
+                      border-radius: 16px;
+                      height: 60px;
+                    }
+                    .primary {
+                      color: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'black' if v >= 1 else 'var(--primary-text-color)' }} !important;
+                      font-size: 10px !important;
+                      font-weight: 700 !important;
+                    }
+              - type: custom:mushroom-template-card
+                primary: Vel 2
+                icon: mdi:numeric-2-box-outline
+                icon_color: >-
+                  {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0)
+                  %}
+
+                  {{ 'black' if v >= 2 else 'grey' }}
+                fill_container: true
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  service_data:
+                    entity_id: select.cappa_kkt_kolbe_velocita
+                    option: "2"
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'orange' if v >= 2 else 'var(--card-background-color)' }} !important;
+                      border-radius: 16px;
+                      height: 60px;
+                    }
+                    .primary {
+                      color: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'black' if v >= 2 else 'var(--primary-text-color)' }} !important;
+                      font-size: 10px !important;
+                      font-weight: 700 !important;
+                    }
+              - type: custom:mushroom-template-card
+                primary: Vel 3
+                icon: mdi:numeric-3-box-outline
+                icon_color: >-
+                  {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0)
+                  %}
+
+                  {{ 'black' if v >= 3 else 'grey' }}
+                fill_container: true
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  service_data:
+                    entity_id: select.cappa_kkt_kolbe_velocita
+                    option: "3"
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'orange' if v >= 3 else 'var(--card-background-color)' }} !important;
+                      border-radius: 16px;
+                      height: 60px;
+                    }
+                    .primary {
+                      color: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'black' if v >= 3 else 'var(--primary-text-color)' }} !important;
+                      font-size: 10px !important;
+                      font-weight: 700 !important;
+                    }
+              - type: custom:mushroom-template-card
+                primary: Turbo
+                icon: mdi:fan-plus
+                icon_color: >-
+                  {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0)
+                  %}
+
+                  {{ 'black' if v >= 4 else 'grey' }}
+                fill_container: true
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  service_data:
+                    entity_id: select.cappa_kkt_kolbe_velocita
+                    option: "4"
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'orange' if v >= 4 else 'var(--card-background-color)' }} !important;
+                      border-radius: 16px;
+                      height: 60px;
+                    }
+                    .primary {
+                      color: {% set v = states('select.cappa_kkt_kolbe_velocita') | int(0) %}{{ 'black' if v >= 4 else 'var(--primary-text-color)' }} !important;
+                      font-size: 10px !important;
+                      font-weight: 700 !important;
+                    }
+          - type: entities
+            title: Azioni e Stato
+            show_header_toggle: false
+            entities:
+              - entity: switch.cappa_kkt_kolbe_power
+                name: Cappa Power
+              - entity: fan.cappa_kkt_kolbe_ventola
+                name: Ventola attiva
+              - entity: light.cappa_kkt_kolbe_luce
+                name: Luce Cappa
+              - type: divider
+              - entity: binary_sensor.cappa_kkt_kolbe_connessa
+                name: Stato Cappa
+              - entity: sensor.cappa_kkt_kolbe_raw_state
+                name: RAW State
