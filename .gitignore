@@ -1,0 +1,22 @@
+# Secrets - NEVER commit your real .env
+.env
+
+# Runtime data / logs
+data/
+*.jsonl
+*.pcap
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
